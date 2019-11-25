@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 204192809da80994b994f8f1f4f7b5d9
+  - enabled: 0
+    path: Assets/backup Nov 18.unity
+    guid: c33f940dc1682f046be78fadbac1e574
+  - enabled: 1
+    path: Assets/Scenes/Subway Surfers.unity
+    guid: 81486ee46895a0c478758c2ee8c434d7
+  - enabled: 1
+    path: Assets/Scenes/ExitMenu.unity
+    guid: a449760434c9b014987278b1bc0e7800
+  m_configObjects: {}
