@@ -1,26 +1,20 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class backgroundScript : MonoBehaviour
-{    
-    public float scrollSpeed = 2f;
-    public float scrollOffset = 25f;
+{   
     public Text timerInSeconds;
 
-    float speed = 5;
+    float speed = 0.5f;
     int maxTime = 30;
 
-    Rigidbody2D rb;
     Vector2 screenBounds;
 
     void Start()
     {
         clearUserDataBeforeGameStart();
-        rb = this.GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(0, -speed*5);
         StartCoroutine(wave());
     }
 
@@ -54,4 +48,9 @@ public class backgroundScript : MonoBehaviour
         strm.Close();
     }
 
+    void Update()
+    {
+        Vector2 offset = new Vector2(0, Time.time * speed);
+        GetComponent<Renderer>().material.mainTextureOffset = offset;
+    }
 }
