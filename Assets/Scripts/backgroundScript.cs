@@ -1,27 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class backgroundScript : MonoBehaviour
-{
-    float speed = 5;
-    Vector2 screenBounds;
-    Vector2 startPos;
-    float newPos;
-    int maxTime = 10;
-
-    Rigidbody2D rb;
-
+{    
     public float scrollSpeed = 2f;
     public float scrollOffset = 25f;
     public Text timerInSeconds;
 
-    // Use this for initialization
+    float speed = 5;
+    int maxTime = 30;
+
+    Rigidbody2D rb;
+    Vector2 screenBounds;
+
     void Start()
     {
-        // Getting backgrounds start position
-        startPos = transform.position;
+        clearUserDataBeforeGameStart();
         rb = this.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, -speed*5);
         StartCoroutine(wave());
@@ -36,7 +33,6 @@ public class backgroundScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void create()
     {
         timerInSeconds.text = "0:" + (--maxTime).ToString();
@@ -49,6 +45,13 @@ public class backgroundScript : MonoBehaviour
     private void OnBecameInvisible()
     {
         gameObject.transform.position = new Vector3(0, screenBounds.y, 0f);
+    }
+
+    void clearUserDataBeforeGameStart()
+    {
+        StreamWriter strm = File.CreateText("user_data.csv");
+        strm.Flush();
+        strm.Close();
     }
 
 }

@@ -539,11 +539,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f2fe27d8090a142be4b903651d6ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brandPrefab: {fileID: 7089871724986905397, guid: e4d14c890e2dd494a853a60f84040a40,
+  brandPrefab: {fileID: 7729373998798021383, guid: 0267c8928a987674e82872f1d3c534c6,
     type: 3}
-  brandPrefab2: {fileID: 7362733593365972533, guid: 7f8507e5dd1eaec46bf8701efa32e5ba,
+  brandPrefab2: {fileID: 5452288308400918539, guid: 592e26cf65859394ab10f4ccd6c744cb,
     type: 3}
-  brandPrefab3: {fileID: 6995373151867643944, guid: 1b09a759143599048ab0544e6ad147a6,
+  brandPrefab3: {fileID: 309375501156624710, guid: 1765dc295856eb64f9b38b97d7ec774c,
     type: 3}
   bomb: {fileID: 6284565973708615517, guid: 281abfd3e6cc87244b7657906e8d5e85, type: 3}
 --- !u!82 &479231241

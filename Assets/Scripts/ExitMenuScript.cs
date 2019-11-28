@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -9,25 +8,24 @@ public class ExitMenuScript : MonoBehaviour
 {
 
     public Text t1, t2, t3, t4, t5, total;
+    string[] brandNames = new String[]{"pepsi-blue","pepsi-black", "pepsi-white", "bomb"};
 
-    // Start is called before the first frame update
     void Start()
     {
         Dictionary<string, int> myMap = new Dictionary<string, int>();
 
-        myMap.Add("pepsi", 0);
-        myMap.Add("maggi", 0);
-        myMap.Add("dairymilk", 0);
-        myMap.Add("bomb", 0);
-
-        using (var reader = new StreamReader("haha.csv"))
+        for (int i=0; i < brandNames.Length; i++)
+        {
+            myMap.Add(brandNames[i], 0);
+        }
+            
+        using (var reader = new StreamReader("user_data.csv"))
         {
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
                 var values = line.Split(',');
 
-                //myMap.Add(values[0], myMap[values[0]]++);
                 if (myMap.ContainsKey(values[1]))
                 {
                     myMap[values[1]]++;
@@ -39,26 +37,17 @@ public class ExitMenuScript : MonoBehaviour
             }
         }
 
-        t1.text = myMap["pepsi"] + "";
-        t2.text = myMap["maggi"] + "";
-        t3.text = myMap["dairymilk"] + "";
-        t4.text = (-5 * myMap["bomb"]) + "";
-        int totalInt = myMap["pepsi"] + myMap["maggi"] + myMap["dairymilk"] + (-5 * myMap["bomb"]);
+        t1.text = myMap[brandNames[0]] + "";
+        t2.text = myMap[brandNames[1]] + "";
+        t3.text = myMap[brandNames[2]] + "";
+        t4.text = (-5 * myMap[brandNames[3]]) + "";
+        int totalInt = myMap[brandNames[0]] + myMap[brandNames[1]] + myMap[brandNames[2]] + (-5 * myMap[brandNames[3]]);
         total.text = totalInt + "";
         totalInt = Math.Max(0, Math.Max(totalInt, PlayerPrefs.GetInt("highScore")));
-
-        StreamWriter strm = File.CreateText("haha.csv");
-        strm.Flush();
-        strm.Close();
-
+        
         PlayerPrefs.SetInt("highScore", totalInt);
         t5.text = "High Score: " + totalInt;
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

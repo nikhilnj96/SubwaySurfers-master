@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class characterScript : MonoBehaviour
 {
-    float speed = 2;
     public int score = 0;
-    public Text display; //must declare publicly to link to text
+    public Text display;
     public AudioSource audioData;
+
+    float speed = 2;
+
     Vector2 screenBounds;
 
-    // Start is called before the first frame update
     void Start()
     {
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
@@ -23,9 +22,6 @@ public class characterScript : MonoBehaviour
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-
-        //Uncomment to enable up and down movement
-        //gameObject.transform.position = new Vector2(transform.position.x + (h * speed), transform.position.y + (v * speed));
 
         gameObject.transform.position = new Vector2(transform.position.x + (h * speed), transform.position.y);
 
@@ -55,7 +51,6 @@ public class characterScript : MonoBehaviour
         audioData.Play(0);
 
         String name = collision.name.Split('(')[0];
-        Debug.Log(name);
         if (name == "bomb")
         {
             score -= 5;
@@ -65,7 +60,7 @@ public class characterScript : MonoBehaviour
         {
             display.text = "Score: " + (++score);
         }
-        writeToCsv("haha.csv", score, name, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+        writeToCsv("user_data.csv", score, name, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
     }
 
     void resetPosition(float x, float y)

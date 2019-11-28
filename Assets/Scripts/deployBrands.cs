@@ -52,10 +52,4 @@ public class deployBrands : MonoBehaviour
             create();
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
