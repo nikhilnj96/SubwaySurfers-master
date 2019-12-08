@@ -12,14 +12,16 @@ public class ExitMenuScript : MonoBehaviour
 
     void Start()
     {
+        GameObject.Find("Button").GetComponentInChildren<Text>().text = "PLAY LEVEL " + Game.getLevel();
+
         Dictionary<string, int> myMap = new Dictionary<string, int>();
 
         for (int i=0; i < brandNames.Length; i++)
         {
             myMap.Add(brandNames[i], 0);
         }
-            
-        using (var reader = new StreamReader("user_data.csv"))
+
+        using (var reader = new StreamReader(Game.getCSVFileName(Game.getLevel() - 1)))
         {
             while (!reader.EndOfStream)
             {
@@ -47,7 +49,5 @@ public class ExitMenuScript : MonoBehaviour
         
         PlayerPrefs.SetInt("highScore", totalInt);
         t5.text = "High Score: " + totalInt;
-
     }
-
 }

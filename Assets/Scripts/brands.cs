@@ -9,6 +9,15 @@ public class brands : MonoBehaviour
 
     void Start()
     {
+        int currentLevel = Game.getLevel();
+        if (currentLevel >= 3)
+        {
+            speed = 85;
+        }
+        else if (currentLevel == 2 )
+        {
+            speed = 75;
+        }
         rb = this.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0, -speed);
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
@@ -16,7 +25,7 @@ public class brands : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.y < screenBounds.y * -2)
+        if (transform.position.y < -screenBounds.y - 40)
         {
             Destroy(this.gameObject);
         } 

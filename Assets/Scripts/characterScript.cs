@@ -8,13 +8,13 @@ public class characterScript : MonoBehaviour
     public Text display;
     public AudioSource audioData;
 
-    float speed = 2;
+    float speedOfCharacterMovement = 2;
 
     Vector2 screenBounds;
 
     void Start()
     {
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-40, Screen.height));
     }
 
     // Update is called once per frame
@@ -23,8 +23,8 @@ public class characterScript : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        gameObject.transform.position = new Vector2(transform.position.x + (h * speed), transform.position.y);
-
+        gameObject.transform.position = new Vector2(transform.position.x + (h * speedOfCharacterMovement), transform.position.y);
+        
         if (transform.position.x > screenBounds.x)
         {
             resetPosition(screenBounds.x, transform.position.y);
@@ -42,10 +42,16 @@ public class characterScript : MonoBehaviour
             resetPosition(transform.position.x, -screenBounds.y);
         }
 
+        PlayerPrefs.SetFloat("positionX", transform.position.x);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*deployBrands Shot = collision.GetComponent<deployBrands>();
+        if (Shot != null)
+            Debug.Log("*********" + Shot.testing);
+        */
+
         Destroy(collision.gameObject);
         audioData = GetComponent<AudioSource>();
         audioData.Play(0);
@@ -60,7 +66,7 @@ public class characterScript : MonoBehaviour
         {
             display.text = "Score: " + (++score);
         }
-        writeToCsv("user_data.csv", score, name, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+        writeToCsv(Game.getCSVFileName(Game.getLevel()), score, name, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
     }
 
     void resetPosition(float x, float y)
@@ -74,9 +80,12 @@ public class characterScript : MonoBehaviour
         {
             using(System.IO.StreamWriter file = new System.IO.StreamWriter(@path, true))
             {
-                file.WriteLine(data + "," + name + "," + datetime);
+                string[] s = PlayerPrefs.GetString("brandsInPlay").Split(';');
+                string choseThisBrandOverWhichOne = s[0] == name ? s[1]:s[0];
+                
+                file.WriteLine(data + "," + name + "," + choseThisBrandOverWhichOne + "," + datetime);
             }
-        } 
+        }
         catch(Exception e)
         {
             Debug.Log("Exception" + e);

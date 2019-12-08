@@ -8,7 +8,7 @@ public class backgroundScript : MonoBehaviour
     public Text timerInSeconds;
 
     float speed = 0.5f;
-    int maxTime = 30;
+    int maxTime = 40;
 
     Vector2 screenBounds;
 
@@ -32,6 +32,7 @@ public class backgroundScript : MonoBehaviour
         timerInSeconds.text = "0:" + (--maxTime).ToString();
         if (maxTime == 0)
         {
+            Game.incrementLevel();
             UnityEngine.SceneManagement.SceneManager.LoadScene("ExitMenu");
         }       
     }
@@ -43,7 +44,8 @@ public class backgroundScript : MonoBehaviour
 
     void clearUserDataBeforeGameStart()
     {
-        StreamWriter strm = File.CreateText("user_data.csv");
+        Game.setID();
+        StreamWriter strm = File.CreateText(Game.getCSVFileName(Game.getLevel()));
         strm.Flush();
         strm.Close();
     }
