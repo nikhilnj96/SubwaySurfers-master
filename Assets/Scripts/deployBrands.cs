@@ -5,10 +5,10 @@ using UnityEngine;
 public class deployBrands : MonoBehaviour
 {
     public GameObject brandPrefab1, brandPrefab2, brandPrefab3, bomb;
+    public List<GameObject> brands = new List<GameObject>();
     public bool testing = false;
 
     GameObject a, a1, a2;
-    List<GameObject> brands = new List<GameObject>();
 
     int currentLevel, test = 0, testPosition = 20, checkUserPreference = 0;
     float respawnTime = 1f;
@@ -69,11 +69,23 @@ public class deployBrands : MonoBehaviour
                 Debug.Log("Couldnt send 2 items... Waiting");
             }
             else
-            {                
-                a1 = Instantiate(brands[getIndex()]) as GameObject;
+            {
+                int i1 = getIndex();
+                int i2 = getIndex();
+                /*while (i1 > 2)
+                    i1 = getIndex();
+                while (i2 > 2)
+                    i2 = getIndex();*/
+                while (i1 > 2 || i2 > 2 || i1==i2)
+                {
+                    i1 = getIndex();
+                    i2 = getIndex();
+                }
+
+                a1 = Instantiate(brands[i1]) as GameObject;
                 a1.transform.position = new Vector2(currentPosition + testPosition, screenBounds.y);
                 
-                a2 = Instantiate(brands[getIndex()]) as GameObject;
+                a2 = Instantiate(brands[i2]) as GameObject;
                 a2.transform.position = new Vector2(currentPosition - testPosition, screenBounds.y);
 
                 addBrandsInPlay(a1.name, a2.name);
@@ -98,6 +110,10 @@ public class deployBrands : MonoBehaviour
         if (s1 != "bomb" && s2 != "bomb")
         {
             PlayerPrefs.SetString("brandsInPlay", s1 + ";" + s2);
+        }
+        else
+        {
+            PlayerPrefs.SetString("brandsInPlay", ";");
         }
     }
 

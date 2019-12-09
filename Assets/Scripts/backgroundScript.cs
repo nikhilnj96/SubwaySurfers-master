@@ -8,13 +8,12 @@ public class backgroundScript : MonoBehaviour
     public Text timerInSeconds;
 
     float speed = 0.5f;
-    int maxTime = 40;
+    int maxTime = Game.maxTime;
 
     Vector2 screenBounds;
 
     void Start()
     {
-        clearUserDataBeforeGameStart();
         StartCoroutine(wave());
     }
 
@@ -40,14 +39,6 @@ public class backgroundScript : MonoBehaviour
     private void OnBecameInvisible()
     {
         gameObject.transform.position = new Vector3(0, screenBounds.y, 0f);
-    }
-
-    void clearUserDataBeforeGameStart()
-    {
-        Game.setID();
-        StreamWriter strm = File.CreateText(Game.getCSVFileName(Game.getLevel()));
-        strm.Flush();
-        strm.Close();
     }
 
     void Update()

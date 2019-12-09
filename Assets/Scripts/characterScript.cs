@@ -55,18 +55,20 @@ public class characterScript : MonoBehaviour
         Destroy(collision.gameObject);
         audioData = GetComponent<AudioSource>();
         audioData.Play(0);
-
+        
         String name = collision.name.Split('(')[0];
         if (name == "bomb")
         {
             score -= 5;
             display.text = "Score: " + (score);
+            Game.increaseScore(name);
         } 
         else
         {
             display.text = "Score: " + (++score);
+            Game.increaseScore(name);
         }
-        writeToCsv(Game.getCSVFileName(Game.getLevel()), score, name, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+        writeToCsv(Game.getCSVFileName(), name);
     }
 
     void resetPosition(float x, float y)
@@ -74,16 +76,21 @@ public class characterScript : MonoBehaviour
         transform.position = new Vector2(x, y);
     }
 
-    void writeToCsv(string path, int data, string name, string datetime)
+    void writeToCsv(string path, string picked)
     {
         try
         {
             using(System.IO.StreamWriter file = new System.IO.StreamWriter(@path, true))
             {
-                string[] s = PlayerPrefs.GetString("brandsInPlay").Split(';');
-                string choseThisBrandOverWhichOne = s[0] == name ? s[1]:s[0];
                 
-                file.WriteLine(data + "," + name + "," + choseThisBrandOverWhichOne + "," + datetime);
+                string userID = PlayerPrefs.GetString("userID","_");
+                string[] s = PlayerPrefs.GetString("brandsInPlay").Split(';');
+                if (s[1] != "")
+                {
+                    string notPicked = (s[0] == picked) ? s[1] : s[0];
+                    Debug.Log(picked + "--" + notPicked);
+                    file.WriteLine(userID + "," + Game.getLevel() + "," + picked + "," + notPicked);
+                }
             }
         }
         catch(Exception e)

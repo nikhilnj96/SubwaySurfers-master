@@ -8,11 +8,18 @@ public class ExitMenuScript : MonoBehaviour
 {
 
     public Text t1, t2, t3, t4, t5, total;
-    string[] brandNames = new String[]{"pepsi-blue","pepsi-black", "pepsi-white", "bomb"};
+    string[] brandNames = Game.brandNames;
 
     void Start()
     {
-        GameObject.Find("Button").GetComponentInChildren<Text>().text = "PLAY LEVEL " + Game.getLevel();
+        if (Game.getLevel() > 3)
+        {
+            GameObject.Find("Button").GetComponentInChildren<Text>().text = "EXIT";
+        }
+        else
+        {
+            GameObject.Find("Button").GetComponentInChildren<Text>().text = "PLAY LEVEL " + Game.getLevel();
+        }
 
         Dictionary<string, int> myMap = new Dictionary<string, int>();
 
@@ -20,30 +27,12 @@ public class ExitMenuScript : MonoBehaviour
         {
             myMap.Add(brandNames[i], 0);
         }
-
-        using (var reader = new StreamReader(Game.getCSVFileName(Game.getLevel() - 1)))
-        {
-            while (!reader.EndOfStream)
-            {
-                var line = reader.ReadLine();
-                var values = line.Split(',');
-
-                if (myMap.ContainsKey(values[1]))
-                {
-                    myMap[values[1]]++;
-                }
-                else
-                {
-                    myMap.Add(values[1], 1);
-                }
-            }
-        }
-
-        t1.text = myMap[brandNames[0]] + "";
-        t2.text = myMap[brandNames[1]] + "";
-        t3.text = myMap[brandNames[2]] + "";
-        t4.text = (-5 * myMap[brandNames[3]]) + "";
-        int totalInt = myMap[brandNames[0]] + myMap[brandNames[1]] + myMap[brandNames[2]] + (-5 * myMap[brandNames[3]]);
+        
+        t1.text = PlayerPrefs.GetInt(brandNames[0]) + "";
+        t2.text = PlayerPrefs.GetInt(brandNames[1]) + "";
+        t3.text = PlayerPrefs.GetInt(brandNames[2]) + "";
+        t4.text = (PlayerPrefs.GetInt(brandNames[3])*-5) + "";
+        int totalInt = PlayerPrefs.GetInt(brandNames[0]) + PlayerPrefs.GetInt(brandNames[1]) + PlayerPrefs.GetInt(brandNames[2]) + (-5*PlayerPrefs.GetInt(brandNames[3]));
         total.text = totalInt + "";
         totalInt = Math.Max(0, Math.Max(totalInt, PlayerPrefs.GetInt("highScore")));
         
