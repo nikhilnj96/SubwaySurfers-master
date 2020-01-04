@@ -4,7 +4,7 @@ using UnityEngine;
 public static class Game
 {
     public static string[] brandNames = new String[] { "pepsi-blue", "pepsi-black", "pepsi-white", "bomb" };
-    public static int maxTime = 10;
+    public static int maxTime = 40;
     public static void setID()
     {
         PlayerPrefs.SetString("id", DateTime.Now.ToString("yyyyMMddHHmmssffff"));

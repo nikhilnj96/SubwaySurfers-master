@@ -12,7 +12,7 @@ public class brands : MonoBehaviour
         int currentLevel = Game.getLevel();
         if (currentLevel >= 3)
         {
-            speed = 85;
+            speed = 80;
         }
         else if (currentLevel == 2 )
         {

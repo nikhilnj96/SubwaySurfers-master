@@ -20,7 +20,7 @@ public class MenuScript : MonoBehaviour
 
     public void startNextGame()
     {
-        Game.resetScore();
+        //Game.resetScore();
         if (Game.getLevel() > 3)
         {
             Application.Quit();

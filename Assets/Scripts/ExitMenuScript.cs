@@ -33,10 +33,14 @@ public class ExitMenuScript : MonoBehaviour
         t3.text = PlayerPrefs.GetInt(brandNames[2]) + "";
         t4.text = (PlayerPrefs.GetInt(brandNames[3])*-5) + "";
         int totalInt = PlayerPrefs.GetInt(brandNames[0]) + PlayerPrefs.GetInt(brandNames[1]) + PlayerPrefs.GetInt(brandNames[2]) + (-5*PlayerPrefs.GetInt(brandNames[3]));
-        total.text = totalInt + "";
-        totalInt = Math.Max(0, Math.Max(totalInt, PlayerPrefs.GetInt("highScore")));
+        total.text = "Your Score: " + totalInt;
+        t5.text = "High Score: " + PlayerPrefs.GetInt("highScore");
         
-        PlayerPrefs.SetInt("highScore", totalInt);
-        t5.text = "High Score: " + totalInt;
+        if (Game.getLevel() > 3)
+        {
+            int highScore = Math.Max(0, Math.Max(totalInt, PlayerPrefs.GetInt("highScore")));
+            PlayerPrefs.SetInt("highScore", highScore);
+            t5.text = "High Score: " + highScore;
+        }
     }
 }
