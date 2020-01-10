@@ -28,6 +28,11 @@ public class MenuScript : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("Subway Surfers");
     }
 
+    public void startNewGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
+
     void clearUserDataBeforeGameStart()
     {
         Game.setID();
